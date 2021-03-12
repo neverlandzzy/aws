@@ -37,5 +37,5 @@ description: Virtual Private Cloud
 
 ![VPC Peering](.gitbook/assets/screen-shot-2021-03-11-at-11.38.18-pm.png)
 
-No Transitive Peering means \(instances in\) VPC B can talk to VPC A, VPC C can talk to VPC A, but VPC B cannot talk to VPC C.
+No Transitive Peering means \(instances in\) VPC B can talk to VPC A, VPC C can talk to VPC A, but VPC B cannot talk to VPC C..
 
