@@ -1,5 +1,5 @@
 # Table of contents
 
 * [VPC](README.md)
-* [Untitled](untitled.md)
+* [EC2](untitled.md)
 
