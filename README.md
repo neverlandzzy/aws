@@ -17,6 +17,8 @@ description: Virtual Private Cloud
 * You **cannot** have a subnet stretched over multiple Availability Zones.
 * You **can** have multiple subnets in the same Availability Zone.
 
+**Only 1 internet gateway per VPC**
+
 **What can we do with a VPC**
 
 * Launch instances into a subnet of your choosing
@@ -37,5 +39,5 @@ description: Virtual Private Cloud
 
 ![VPC Peering](.gitbook/assets/screen-shot-2021-03-11-at-11.38.18-pm.png)
 
-No Transitive Peering means \(instances in\) VPC B can talk to VPC A, VPC C can talk to VPC A, but VPC B cannot talk to VPC C.
+No Transitive Peering means \(instances in\) VPC B can talk to VPC A, VPC C can talk to VPC A, but VPC B cannot talk to VPC C..
 
