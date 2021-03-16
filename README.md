@@ -95,7 +95,19 @@ No Transitive Peering means \(instances in\) VPC B can talk to VPC A, VPC C can 
   * DHCP traffic is not monitored
   * Traffic to the reserved IP address for the default VPC router is not monitored.
 
+**Bastion**
+
+* A NAT Gateway or NAT instance is used to provide internet traffic to EC2 instances in a private subnets.
+* A Bastion is used to securely administer EC2 instances \(using SSH or RDP\). 
+* You cannot use a NAT Gateway as a Bastion host.
+
+**Direct Connect**
+
+* Direct Connect directly connects your data center to AWS
+* Useful for high throughput workloads \(i.e. lots of network traffic\)
+* Or if you need a stable and reliable secure connection.d
+
+![](.gitbook/assets/image.png)
 
 
-\*\*\*\*
 
