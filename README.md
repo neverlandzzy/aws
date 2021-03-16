@@ -109,5 +109,3 @@ No Transitive Peering means \(instances in\) VPC B can talk to VPC A, VPC C can 
 
 ![](.gitbook/assets/image.png)
 
-
-
