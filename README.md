@@ -105,9 +105,7 @@ No Transitive Peering means \(instances in\) VPC B can talk to VPC A, VPC C can 
 
 * Direct Connect directly connects your data center to AWS
 * Useful for high throughput workloads \(i.e. lots of network traffic\)
-* Or if you need a stable and reliable secure connection.d
+* Or if you need a stable and reliable secure connection.
 
 ![](.gitbook/assets/image.png)
-
-
 
