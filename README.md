@@ -76,6 +76,7 @@ No Transitive Peering means \(instances in\) VPC B can talk to VPC A, VPC C can 
 * Network ACLs contain a numbered list of rules that is evaluated in order, starting with the lowest numbered rule.
 * Network ACLs have separate inbound and outbound rules, and each rule can either allow or deny traffic.
 * Network ACLs are stateless; responses to allowed inbound traffic are subject to the rules for outbound traffic \(and vice versa\). - **Security groups are stateful, so you don't need to do that.**
+* Security groups act like a firewall at instance level, where as ACLs are an additional layer of security that act at the subnet level.
 
 **You need at least 2 public subnets in order to create a load balancer.**
 
@@ -108,4 +109,93 @@ No Transitive Peering means \(instances in\) VPC B can talk to VPC A, VPC C can 
 * Or if you need a stable and reliable secure connection.
 
 ![](.gitbook/assets/image.png)
+
+* Steps to set up Direct Connect \(in the exam\)
+  * Create a virtual interface in the Direct Connect console. This is a Public Virtual Interface
+  * Go to the VPC console and then to VPN connections. Create a Customer Gateway
+  * Create a Virtual Private Gateway
+  * Attach the Virtual Private Gateway to the desired VPC
+  * Select VPN Connections and create new VPN Connection
+  * Select the Virtual Private Gateway and the Customer Gateway
+  * Once the VPN is available, set up the VPN on the customer gateway or firewall
+  * [https://www.youtube.com/watch?v=dhpTTT6V1So](https://www.youtube.com/watch?v=dhpTTT6V1So)
+
+**Global Accelerator**
+
+![](.gitbook/assets/screen-shot-2021-03-17-at-10.15.25-pm.png)
+
+* Components
+  * Static IP addresses
+    * By default, Global Accelerator provides you with 2 static IP addresses that associated with accelerator.
+  * Accelerator
+    * Accelerator directs traffic to optimal endpoints over the AWS global network to improve the availability and performance of your internet applications.
+    * Each accelerator includes one or more listeners
+  * DNS Name
+    * Global Accelerator assigns each accelerator a default Domain Name System\(DNS\) that points to the static IP addresses that Global Accelerator assigns.
+  * Network Zone
+    * Network zone services the static IP addresses for your accelerator from a unique IP subnet. Similar to Availability Zone, a network zone is an isolated unit with its own set of physical infrastructure.
+    * When you configure an accelerator, by default, Global Accelerator allocates 2 IPv4 addresses. If one IP address from a network zone becomes unavailable due to IP address blocking by certain client networks, or network disruptions, client applications can retry on the healthy IP address from the other isolated network zone.
+  * Listener
+    * A listener processes inbound connections from clients to Global Accelerator, based on the port and protocol that you configure. Global Accelerator supports both TCP and UDP protocols.
+    * Each listener has one or more endpoint groups associated with it, and traffic is forwarded to endpoints in one of the groups.
+    * You associate endpoint groups with listeners by specifying the Regions that you want to distribute traffic to. Traffic is distributed to optimal endpoints within the endpoint groups associated with a listener.
+  * Endpoint Group
+    * Each endpoint group is associated with a specific AWS region.
+    * Endpoint groups include one or more endpoints in the region.
+    * You can increase or reduce the percentage of traffic that would be otherwise directed to an endpoint group by adjusting a setting called **traffic dial**
+    * The traffic dial lets you easily do performance testing or blue/green deployment testing for new releases across different AWS regions.
+  * Endpoint
+    * Endpoints can be the Network Load Balancers, Application Load Balancers, EC2 instances or Elastic IP addresses.
+    * An Application Load Balancer endpoint can be internet-facing or internal. Traffic is routed to endpoints based on configuration options that you choose, such as endpoint weights.
+    * For each endpoint, you can configure weights, which are numbers that you can use to specify the proportion of traffic to route to each one. 
+
+**VPC Endpoint**
+
+* VPC doesn't require public IP addresses to communicate with resources in the service.
+* Traffic between your VPC and the other service does not leave the Amazon network.
+* Two types
+  * **Interface Endpoints -** An interface endpoint is an elastic network interface with a private IP address that serves as an entry point for traffic destined to a supported services \(e.g. SageMaker, SNS, SQS, etc.\).
+  * **Gateway Endpoints** - like net gateways, supports S3 and DynamoDB
+
+**VPC Private Link**
+
+* To open applications up to other VPCs, we can either
+  * Open the VPC up to the Internet
+    * Security considerations, everything in the public subnet is public.
+    * A lot more to mange.
+  * Use VPC peering
+    * Will have to create and manage many different peering relationships.
+    * The whole network will be accessible. This isn't good if you have multiple applications within your VPC.
+* Using Private Link
+  * The best way to expose a service VPC to thousands of customer VPCs
+  * Doesn't require VPC peering, route tables, NAT, IGWs etc.
+  * Requires a Network Load Balancer on the service VPC and an ENI on the customer VPC
+
+![](.gitbook/assets/screen-shot-2021-03-17-at-11.09.16-pm.png)
+
+**Transit Gateway**
+
+![](.gitbook/assets/screen-shot-2021-03-17-at-11.12.32-pm.png)
+
+* Allows you to have transitive peering between thousands of VPCs and on-premises data centers.
+* Works on a hub-and-spoke model.
+* Works on a regional basis, but you can have it across multiple regions.
+* You can use it across multiple AWS accounts using RAM\(Resource Access Manager\)
+* You can use route tables to limit how VPCs talk to one another
+* Works with Direct Connect as well as VPN connections
+* Supports IP multicast.
+
+**VPN CloudHub**
+
+* If you have multiple sites, each with its own VPN connection, you can use AWS VPN CloudHub to connect those sites together.
+* Works on a hub-and-spoke model.
+* Low cost, easy to manage
+* It operates over the public internet, but all traffic between the customer gateway and the VPN CloudHub is encrypted.
+
+**AWS Network Costs**
+
+![](.gitbook/assets/screen-shot-2021-03-17-at-11.28.30-pm.png)
+
+* Use private IP addresses over public IP addresses to save on costs. This then utilizes the AWS backbone network.
+* If you want to cut all network costs, group your EC2 instances in the same Availability Zone and use private IP addresses. This will be cost-free, but will have single point of failure issue.
 
